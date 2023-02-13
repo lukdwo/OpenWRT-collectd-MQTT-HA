@@ -1,0 +1,35 @@
+# OpenWRT-collectd-MQTT-HA
+ ZTE MF823 SMS and stats/telemery to MQTT
+
+# OpenWRT
+Reguirements:
+`collectd
+collectd-mod-mqtt
+collectd-mod-* optional modules`
+
+ 
+vi  /etc/collectd.conf
+
+Add listed below configuration:
+`LoadPlugin mqtt
+<Plugin "mqtt">
+  # Send values to an MQTT server
+  <Publish "OpenWRT">
+    Host "192.168.0.1"
+    Port "1883"
+    User "user"
+    Password "Password"
+    ClientId "OpenWRT"
+    Prefix "collectd"
+    Retain true
+  </Publish>
+</Plugin>`
+
+# HA configuration
+Add config to your HA configuration file.
+![configuration.yaml](configuration.yaml)
+![My Image](HA.jpg)
+
+# Troubleshooting
+Check received data on MQTT server:
+ mosquitto_sub -h localhost -p 1883 -u user -P Password -t collectd/# -d
