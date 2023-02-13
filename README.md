@@ -6,7 +6,7 @@ Reguirements:
 ```shell
 collectd
 collectd-mod-mqtt
-collectd-mod-* optional modules`
+collectd-mod-* optional modules
 ```
  
 `vi  /etc/collectd.conf`
@@ -28,8 +28,8 @@ LoadPlugin mqtt
 ```
 
 # HA configuration
-Add config to your HA configuration file. \
-[configuration.yaml](configuration.yaml)
+Add config to your HA configuration file.
+[configuration.yaml](configuration.yaml) \
 ![My Image](HA.jpg)
 
 # Troubleshooting
