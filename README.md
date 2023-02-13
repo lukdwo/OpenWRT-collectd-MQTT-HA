@@ -1,5 +1,5 @@
 # OpenWRT-collectd-MQTT-HA
- ZTE MF823 SMS and stats/telemery to MQTT
+OpenWRT Collectd to MQTT with Homeassistant Template
 
 # OpenWRT
 Reguirements:
@@ -8,12 +8,12 @@ collectd-mod-mqtt
 collectd-mod-* optional modules`
 
  
-vi  /etc/collectd.conf
+`vi  /etc/collectd.conf`
 
 Add listed below configuration:
-`LoadPlugin mqtt
+```shell
+LoadPlugin mqtt
 <Plugin "mqtt">
-  # Send values to an MQTT server
   <Publish "OpenWRT">
     Host "192.168.0.1"
     Port "1883"
@@ -23,13 +23,14 @@ Add listed below configuration:
     Prefix "collectd"
     Retain true
   </Publish>
-</Plugin>`
+</Plugin>
+```
 
 # HA configuration
 Add config to your HA configuration file.
-![configuration.yaml](configuration.yaml)
+[configuration.yaml](configuration.yaml)
 ![My Image](HA.jpg)
 
 # Troubleshooting
 Check received data on MQTT server:
- mosquitto_sub -h localhost -p 1883 -u user -P Password -t collectd/# -d
+ `mosquitto_sub -h localhost -p 1883 -u user -P Password -t collectd/# -d`
