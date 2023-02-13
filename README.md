@@ -3,10 +3,11 @@ OpenWRT Collectd to MQTT with Homeassistant Template
 
 # OpenWRT
 Reguirements:
-`collectd
+```shell
+collectd
 collectd-mod-mqtt
 collectd-mod-* optional modules`
-
+```
  
 `vi  /etc/collectd.conf`
 
@@ -27,10 +28,10 @@ LoadPlugin mqtt
 ```
 
 # HA configuration
-Add config to your HA configuration file.
+Add config to your HA configuration file. \
 [configuration.yaml](configuration.yaml)
 ![My Image](HA.jpg)
 
 # Troubleshooting
-Check received data on MQTT server:
+Check received data on MQTT server: \
  `mosquitto_sub -h localhost -p 1883 -u user -P Password -t collectd/# -d`
