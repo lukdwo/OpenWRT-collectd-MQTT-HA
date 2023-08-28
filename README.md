@@ -29,7 +29,9 @@ LoadPlugin mqtt
 
 # HA configuration
 Add config to your HA configuration file.
-[configuration.yaml](configuration.yaml) \
+[configuration.yaml](configuration.yaml) 
+Add config to your HA lovelace file.
+[lovelace.yaml](lovelace.yaml) \
 ![My Image](HA.jpg)
 
 # Troubleshooting

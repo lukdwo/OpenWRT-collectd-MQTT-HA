@@ -1,0 +1,48 @@
+type: entities
+entities:
+  - entity: sensor.openwrt_uptime
+    format: precision2
+    tap_action:
+      action: url
+      url_path: https://192.168.1.1/
+    type: custom:multiple-entity-row
+    name: AP
+    icon: mdi:speedometer
+    secondary_info: last-changed
+    entities:
+      - entity: sensor.openwrt_connections_2
+        unit: false
+        name: Clients
+      - entity: sensor.openwrt_l1
+        format: precision2
+        unit: false
+        name: L1
+      - entity: sensor.openwrt_l5
+        format: precision2
+        unit: false
+        name: L5
+      - entity: sensor.openwrt_l15
+        format: precision2
+        unit: false
+        name: L15
+  - type: custom:mini-graph-card
+    name: OpenWrt
+    icon: mdi:server
+    hours_to_show: 12
+    points_per_hour: 6
+    line_width: 2
+    entities:
+      - entity: sensor.openwrt_connections
+        name: Con.
+        color: lightgreen
+      - entity: sensor.openwrt_temperatura
+        name: Temp
+      - entity: sensor.openwrt_ram_used
+        format: precision2
+        name: RAM/U
+      - entity: sensor.openwrt_ram_free
+        format: precision2
+        name: RAM/F
+      - entity: sensor.openwrt_wg_packets
+        format: precision0
+        name: WG
