@@ -1,128 +1,250 @@
-# OpenWRT collectd
+### OpenWRT MQTT
 mqtt:
   sensor:
    -  name: OpenWRT RAM buffered
-      state_topic: collectd/OpenWrt/memory/memory-buffered
+      state_topic: collectd/<Open-WRT-Hostname>/memory/memory-buffered
       unit_of_measurement: MB
       value_template: "{{ value.split(':')[1].split('\x00')[0] | float / 1000000 }}"
       unique_id: ram_buffered
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
    -  name: OpenWRT RAM free
-      state_topic: collectd/OpenWrt/memory/memory-free
+      state_topic: collectd/<Open-WRT-Hostname>/memory/memory-free
       unit_of_measurement: MB
       value_template: "{{ value.split(':')[1].split('\x00')[0] | float / 1000000 }}"
       unique_id: ram_free
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
    -  name: OpenWRT RAM cached
-      state_topic: collectd/OpenWrt/memory/memory-cached
+      state_topic: collectd/<Open-WRT-Hostname>/memory/memory-cached
       unit_of_measurement: MB
       value_template: "{{ value.split(':')[1].split('\x00')[0] | float / 1000000 }}"
       unique_id: ram_cached
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
    -  name: OpenWRT RAM used
-      state_topic: collectd/OpenWrt/memory/memory-used
+      state_topic: collectd/<Open-WRT-Hostname>/memory/memory-used
       unit_of_measurement: MB
       value_template: "{{ value.split(':')[1].split('\x00')[0] | float / 1000000 }}"
       unique_id: ram_used
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
  
 # load
    -  name: OpenWRT L1
       unit_of_measurement: load
-      state_topic: collectd/OpenWrt/load/load
+      state_topic: collectd/<Open-WRT-Hostname>/load/load
       value_template: "{{ value.split(':')[1] | float }}"
       unique_id: L1 
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
    -  name: OpenWRT L5
       unit_of_measurement: load
-      state_topic: collectd/OpenWrt/load/load
+      state_topic: collectd/<Open-WRT-Hostname>/load/load
       value_template: "{{ value.split(':')[2] | float }}"
       unique_id: L5 
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
    -  name: OpenWRT L15
       unit_of_measurement: load
-      state_topic: collectd/OpenWrt/load/load
+      state_topic: collectd/<Open-WRT-Hostname>/load/load
       value_template: "{{ value.split(':')[3].split('\x00')[0] | float }}"
       unique_id: L15
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
  
 # br-lan interface
    -  name: OpenWRT br-lan errors
-      state_topic: collectd/OpenWrt/interface-br-lan/if_errors
+      state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_errors
       unit_of_measurement: packets
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int }}"
-      unique_id: br-lan-errors    
+      unique_id: br-lan-errors
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
    -  name: OpenWRT br-lan dropped
-      state_topic: collectd/OpenWrt/interface-br-lan/if_dropped
+      state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_dropped
       unit_of_measurement: packets
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int }}"
       unique_id: br-lan-dropped
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
    -  name: OpenWRT br-lan TX MB/s
-      state_topic: collectd/OpenWrt/interface-br-lan/if_octets
+      state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_octets
       unit_of_measurement: MB/s
       value_template: "{{ value.split(':')[1] | float / 1048576}}"
       unique_id: br-lan-tx-transfer
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
    -  name: OpenWRT br-lan RX MB/s
-      state_topic: collectd/OpenWrt/interface-br-lan/if_octets
+      state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_octets
       unit_of_measurement: MB/s
       value_template: "{{ value.split(':')[2].split('\x00')[0] | float / 1048576 }}"
       unique_id: br-lan-rx-transfer
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
    -  name: OpenWRT br-lan packets
-      state_topic: collectd/OpenWrt/interface-br-lan/if_packets
+      state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_packets
       unit_of_measurement: packets/s
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int }}"
       unique_id: br-lan-packets
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
  
 # wg interface
    -  name: OpenWRT wg errors
-      state_topic: collectd/OpenWrt/interface-wg/if_errors
+      state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_errors
       unit_of_measurement: packets
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int }}"
       unique_id: wg-errors
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
    -  name: OpenWRT wg dropped
-      state_topic: collectd/OpenWrt/interface-wg/if_dropped
+      state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_dropped
       unit_of_measurement: packets
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | int }}"
       unique_id: wg-dropped
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
    -  name: OpenWRT wg TX MB/s
-      state_topic: collectd/OpenWrt/interface-wg/if_octets
+      state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_octets
       unit_of_measurement: MB/s
       value_template: "{{ value.split(':')[1] | float / 1048576}}"
       unique_id: wg-tx-transfer
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
    -  name: OpenWRT wg RX MB/s
-      state_topic: collectd/OpenWrt/interface-wg/if_octets
+      state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_octets
       unit_of_measurement: MB/s
       value_template: "{{ value.split(':')[2].split('\x00')[0] | float / 1048576 }}"
       unique_id: wg-rx-transfer
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
    -  name: OpenWRT wg packets
-      state_topic: collectd/OpenWrt/interface-wg/if_packets
+      state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_packets
       unit_of_measurement: packets/s
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int }}"
       unique_id: wg-packets
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
 
 # uptime
    -  name: OpenWRT uptime
-      state_topic: collectd/OpenWrt/uptime/uptime
+      state_topic: collectd/<Open-WRT-Hostname>/uptime/uptime
       unit_of_measurement: days
-      value_template: "{{ value.split(':')[1].split('\x00')[0] | int / 86400 | round(2) }}"
+      value_template: "{{ (value.split(':')[1].split('\x00')[0] | float / 86400) | round(1) }}"
       unique_id: ap_uptime
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
 # ping
    -  name: OpenWRT google ping
-      state_topic: collectd/OpenWrt/ping/ping-8.8.8.8
+      state_topic: collectd/<Open-WRT-Hostname>/ping/ping-8.8.8.8
       unit_of_measurement: ms
       value_template: "{{ value.split(':')[1].split('\x00')[0] | float | round(2) }}"
       unique_id: ap_ping
-
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
+        
 # connections
    -  name: OpenWRT connections
-      state_topic: collectd/OpenWrt/conntrack/conntrack
+      state_topic: collectd/<Open-WRT-Hostname>/conntrack/conntrack
       unit_of_measurement: connections
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int }}"
       unique_id: ap_connections
-
-# 2.4 clients
-   -  name: OpenWRT clients
-      state_topic: collectd/OpenWrt/iwinfo-wlan1/stations
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
+        
+# 2.4 ghz clients
+   -  name: OpenWRT clients 2.4Ghz
+      state_topic: collectd/<Open-WRT-Hostname>/iwinfo-wlan1/stations
       unit_of_measurement: clients
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int }}"
-      unique_id: ap_clients
+      unique_id: ap_clients2
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
+        
+# 5 ghz clients
+   -  name: OpenWRT clients 5Ghz
+      state_topic: collectd/<Open-WRT-Hostname>/iwinfo-wlan0/stations
+      unit_of_measurement: clients
+      value_template: "{{ value.split(':')[1].split('\x00')[0] | int }}"
+      unique_id: ap_clients5
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
 
 # temperature
-   -  name: OpenWRT temperatura
-      state_topic: collectd/OpenWrt/thermal-thermal_zone9/temperature
+   -  name: OpenWRT temperature
+      state_topic: collectd/<Open-WRT-Hostname>/thermal-thermal_zone9/temperature
       unit_of_measurement: °C
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int }}"
       unique_id: ap_temp
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
