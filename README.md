@@ -1,6 +1,6 @@
 
 # OpenWRT-collectd-MQTT-HA
-OpenWRT Collectd to MQTT with Homeassistant Template
+Collect OpenWRT statistics using this MQTT Template.
 
 ## Setup
 ### Home Assistant MQTT setup
