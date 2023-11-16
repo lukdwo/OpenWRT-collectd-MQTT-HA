@@ -58,7 +58,9 @@ OpenWRT will start sending data to Home Assistant, but you won't be able to see 
 ### Home Assistant Entities setup
 
 Go back to Home Assistant for the final setup.
-Multiple text replacements is required, on Windows you can use Notepad++.
+Some text replacements are required, on Windows you can use Notepad++.
+
+Open this sample [configuration.yaml](configuration.yaml).
 
 Replace occurrencies of `<Open-WRT-Hostname>` with the value you see in *OpenWRT > System > System > General Settings > Hostname*
 
@@ -74,9 +76,11 @@ Each sensor has a section like the following:
 
 It allows to create a MQTT device, so all entities are grouped nicely. Replace these example values for **each sensor** entering what you like.
 
-Save the configuration and restart Home Assistant.
+When you are done with text editing, paste the code in your configuration.yaml on Home Assistant.
 
-When finished, you will have a new MQTT device named as you have chosen above, and the entities will be populated!
+Save the file and restart Home Assistant.
+
+When finished, you will have a new MQTT device named after the name you have chosen above, and the entities will be populated!
 
 Some entities require additional OpenWRT mod packages.
 
