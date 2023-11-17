@@ -34,16 +34,16 @@ Connect to your OpenWRT router via SSH, create a new folder called `conf.d` in `
 
 Using your favourite editor, create a new file in conf.d called `mqtt.conf`
 
-Add this configuration
+Add this configuration to the file, and edit the lines that are commented.
 
 ```shell
 LoadPlugin mqtt
 <Plugin "mqtt">
   <Publish "OpenWRT">
-    Host "<home assistant ip>"
+    Host "192.168.1.101" #replace this with your Home Assistant IP
     Port "1883"
-    User "<mqtt user>"
-    Password "<mqtt password>"
+    User "mqtt_openwrt" #replace this with your MQTT User
+    Password "MySuperSafePW2!@" #replace this with your MQTT password
     ClientId "OpenWRT"
     Prefix "collectd"
     Retain true
