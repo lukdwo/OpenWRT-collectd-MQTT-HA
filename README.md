@@ -1,6 +1,6 @@
 
 # OpenWRT-collectd-MQTT-HA
-Collect OpenWRT statistics using this MQTT Template.
+Collect OpenWRT statistics from your Router using this MQTT Template.
 
 ## Setup
 ### Home Assistant MQTT setup
@@ -86,7 +86,7 @@ Some entities require additional OpenWRT mod packages.
 
 ## Dashboard and card setup
 
-To use this card, you must install `multiple-entity-row` from HACS.
+To use this card, you must install `multiple-entity-row` and `mini-graph-card` from HACS.
 
 Edit the dashboard, add a new YAML card and paste the code you find in [lovelace.yaml](lovelace.yaml).
 
