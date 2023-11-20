@@ -4,12 +4,12 @@ entities:
     format: precision2
     tap_action:
       action: url
-      url_path: https://192.168.1.1/
+      url_path: https://<your router ip>
     type: custom:multiple-entity-row
-    name: AP
-    icon: mdi:speedometer
+    name: OpenWRT Stats
+    icon: mdi:access-point-network
     secondary_info: last-changed
-    entities:
+    entities: #some of the followings might need to be adjusted according to your configuration
       - entity: sensor.openwrt_connections_2
         unit: false
         name: Clients
@@ -31,11 +31,11 @@ entities:
     hours_to_show: 12
     points_per_hour: 6
     line_width: 2
-    entities:
+    entities: #some of the followings might need to be adjusted according to your configuration
       - entity: sensor.openwrt_connections
         name: Con.
         color: lightgreen
-      - entity: sensor.openwrt_temperatura
+      - entity: sensor.openwrt_temperature
         name: Temp
       - entity: sensor.openwrt_ram_used
         format: precision2
