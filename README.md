@@ -74,15 +74,15 @@ Each sensor has a section like the following:
             manufacturer: Netgear
 ```
 
-It allows to create a MQTT device, so all entities are grouped nicely. Replace these example values for **each sensor** entering what you like.
+It allows to create a MQTT device, so all entities are grouped nicely. Replace these example values for **each sensor** entering what you like, these are just informational labels. Use the same values for each entity!
 
 When you are done with text editing, paste the code in your configuration.yaml on Home Assistant.
 
 Save the file and restart Home Assistant.
 
-When finished, you will have a new MQTT device named after the name you have chosen above, and the entities will be populated!
+When finished, you will have a new MQTT device named after the name you have chosen above, and the entities will be populated.
 
-Some entities require additional OpenWRT mod packages.
+Please note that some entities require additional OpenWRT mod packages.
 
 ## Dashboard and card setup
 
