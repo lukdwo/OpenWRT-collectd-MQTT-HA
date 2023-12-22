@@ -26,24 +26,25 @@ Optional `collectd-mod-*` packages can provide more data. These are recommended:
     collectd-mod-thermal
     collectd-mod-uptime
 
-Navigate to *Statistics > Setup* and change the main collectd folder to `/etc/collectd`
-
-If you installed optional mod packages, enable them in the *General Plugin* tab.
+Navigate to *Statistics > Setup*. If you installed optional mod packages, enable them in the *General Plugin* tab.
 
 Connect to your OpenWRT router via SSH, create a new folder called `conf.d` in `/etc/collectd/`
 
 Using your favourite editor, create a new file in conf.d called `mqtt.conf`
 
-Add this configuration to the file, and edit the lines that are commented.
-
+Add this configuration to the file, and edit the lines:
+* `Host` replace this with your Home Assistant IP
+* `User` replace this with your MQTT User
+* `Password` replace this with your MQTT password
+   
 ```shell
 LoadPlugin mqtt
 <Plugin "mqtt">
   <Publish "OpenWRT">
-    Host "192.168.1.101" #replace this with your Home Assistant IP
+    Host "192.168.1.101"
     Port "1883"
-    User "mqtt_openwrt" #replace this with your MQTT User
-    Password "MySuperSafePW2!@" #replace this with your MQTT password
+    User "mqtt_openwrt"
+    Password "MySuperSafePW2!@"
     ClientId "OpenWRT"
     Prefix "collectd"
     Retain true
