@@ -181,8 +181,8 @@ mqtt:
 # uptime
    -  name: OpenWRT uptime
       state_topic: collectd/<Open-WRT-Hostname>/uptime/uptime
-      unit_of_measurement: days
-      value_template: "{{ (value.split(':')[1].split('\x00')[0] | float / 86400) | round(1) }}"
+      device_class: timestamp
+      value_template: "{{ as_datetime( (value.split(':')[0] | float ) - (value.split(':')[1].split('\x00')[0] | float ) ) }}"
       unique_id: ap_uptime
       device:
         identifiers: WRT7800
