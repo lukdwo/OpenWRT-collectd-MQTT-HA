@@ -28,6 +28,19 @@ Optional `collectd-mod-*` packages can provide more data. These are recommended:
 
 Navigate to *Statistics > Setup*. If you installed optional mod packages, enable them in the *General Plugin* tab.
 
+In the *Output Plugins* Tab, enable *Mqtt* and click on Configure. Then click Add, and enter the following Details:
+- Name - `OpenWRT` or what you like
+- Host - this is your Home Assistant IP
+- Port - `1883` if you're using the default port
+- User - your MQTT User
+- Password - your MQTT password
+- Prefix - `collectd`
+
+Save and apply changes.  
+
+For reference, you can find below the CLI configuration.
+**CLI Method**
+<details>
 Connect to your OpenWRT router via SSH, create a new folder called `conf.d` in `/etc/collectd/`
 
 Using your favourite editor, create a new file in conf.d called `mqtt.conf`
@@ -53,6 +66,7 @@ LoadPlugin mqtt
 ```
 
 Restart collectd on OpenWRT by executing `service collectd restart`.
+</details>
 
 OpenWRT will start sending data to Home Assistant, but you won't be able to see it (yet).
 
