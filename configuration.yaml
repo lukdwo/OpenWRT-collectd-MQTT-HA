@@ -4,7 +4,7 @@ mqtt:
    -  name: OpenWRT RAM buffered
       state_topic: collectd/<Open-WRT-Hostname>/memory/memory-buffered
       unit_of_measurement: MB
-      value_template: "{{ value.split(':')[1].split('\x00')[0] | float / 1000000 }}"
+      value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 1000000) | round(1) }}"
       unique_id: ram_buffered
       device:
         identifiers: WRT7800
@@ -14,7 +14,7 @@ mqtt:
    -  name: OpenWRT RAM free
       state_topic: collectd/<Open-WRT-Hostname>/memory/memory-free
       unit_of_measurement: MB
-      value_template: "{{ value.split(':')[1].split('\x00')[0] | float / 1000000 }}"
+      value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 1000000) | round(1) }}"
       unique_id: ram_free
       device:
         identifiers: WRT7800
@@ -24,7 +24,7 @@ mqtt:
    -  name: OpenWRT RAM cached
       state_topic: collectd/<Open-WRT-Hostname>/memory/memory-cached
       unit_of_measurement: MB
-      value_template: "{{ value.split(':')[1].split('\x00')[0] | float / 1000000 }}"
+      value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 1000000) | round(1) }}"
       unique_id: ram_cached
       device:
         identifiers: WRT7800
@@ -34,7 +34,7 @@ mqtt:
    -  name: OpenWRT RAM used
       state_topic: collectd/<Open-WRT-Hostname>/memory/memory-used
       unit_of_measurement: MB
-      value_template: "{{ value.split(':')[1].split('\x00')[0] | float / 1000000 }}"
+      value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 1000000) | round(1) }}"
       unique_id: ram_used
       device:
         identifiers: WRT7800
