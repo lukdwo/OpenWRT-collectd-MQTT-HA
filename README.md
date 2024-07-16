@@ -8,10 +8,6 @@ Let's prepare Home Assistant first.
 
 If you don't have it yet, get Mosquitto Broker up and running. Read ![the official docs](https://github.com/home-assistant/addons/blob/174f8e66d0eaa26f01f528beacbde0bd111b711c/mosquitto/DOCS.md) to get started. Don't forget to configure the MQTT Integration as well!
 
-Navigate to the MQTT Integration, then click *Configure*. In the section Listen to a topic, add `collectd/#`, then click *Start Listening*. 
-Reload the MQTT integration to apply the changes.
-
-
 ### OpenWRT
 
 Install the following packages:
@@ -106,6 +102,8 @@ To use this card, you must install `multiple-entity-row` and `mini-graph-card` f
 Edit the dashboard, add a new YAML card and paste the code you find in [lovelace.yaml](lovelace.yaml).
 
 ## Troubleshooting
+
+To quickly check that you're receiving data from your OpenWRT router, open HA and Navigate to the MQTT Integration, then click *Configure*. In the section Listen to a topic, add `collectd/#`, then click *Start Listening*. You should see many messages coming from OpenWRT.
 
 Check received data on MQTT server using  [MQTT Explorer](https://community.home-assistant.io/t/addon-mqtt-explorer-new-version/603739)  or use this code if you prefer:
 
