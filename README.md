@@ -35,8 +35,8 @@ In the *Output Plugins* Tab, enable *Mqtt* and click on Configure. Then click Ad
 Save and apply changes.  
 
 For reference, you can find below the CLI configuration.
-**CLI Method**
 <details>
+     <summary>CLI configuration</summary>
 Connect to your OpenWRT router via SSH, create a new folder called `conf.d` in `/etc/collectd/`
 
 Using your favourite editor, create a new file in conf.d called `mqtt.conf`
