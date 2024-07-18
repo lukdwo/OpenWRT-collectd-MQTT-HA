@@ -160,7 +160,7 @@ mqtt:
    -  name: OpenWRT wg RX MB/s
       state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_octets
       unit_of_measurement: MB/s
-      value_template: "{{ value.split(':')[2].split('\x00')[0] | float(0) / 1048576 | round (2)  }}"
+      value_template: "{{ value.split(':')[2].split('\x00')[0] | float(0) / 1048576 | round (2) }}"
       unique_id: wg-rx-transfer
       device:
         identifiers: WRT7800
@@ -182,7 +182,7 @@ mqtt:
    -  name: OpenWRT uptime
       state_topic: collectd/<Open-WRT-Hostname>/uptime/uptime
       unit_of_measurement: days
-      value_template: "{{ (value.split(':')[1].split('\x00')[0] | float / 86400) | round(1) }}"
+      value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 86400) | round(1) }}"
       unique_id: ap_uptime
       device:
         identifiers: WRT7800
@@ -193,7 +193,7 @@ mqtt:
    -  name: OpenWRT google ping
       state_topic: collectd/<Open-WRT-Hostname>/ping/ping-8.8.8.8
       unit_of_measurement: ms
-      value_template: "{{ value.split(':')[1].split('\x00')[0] | float | round(2) }}"
+      value_template: "{{ value.split(':')[1].split('\x00')[0] | float(0) | round(2) }}"
       unique_id: ap_ping
       device:
         identifiers: WRT7800
@@ -205,7 +205,7 @@ mqtt:
    -  name: OpenWRT connections
       state_topic: collectd/<Open-WRT-Hostname>/conntrack/conntrack
       unit_of_measurement: connections
-      value_template: "{{ value.split(':')[1].split('\x00')[0] | int }}"
+      value_template: "{{ value.split(':')[1].split('\x00')[0] | int | float(0) }}"
       unique_id: ap_connections
       device:
         identifiers: WRT7800
@@ -217,7 +217,7 @@ mqtt:
    -  name: OpenWRT clients 2.4Ghz
       state_topic: collectd/<Open-WRT-Hostname>/iwinfo-wlan1/stations
       unit_of_measurement: clients
-      value_template: "{{ value.split(':')[1].split('\x00')[0] | int }}"
+      value_template: "{{ value.split(':')[1].split('\x00')[0] | int | float(0) }}"
       unique_id: ap_clients2
       device:
         identifiers: WRT7800
@@ -229,7 +229,7 @@ mqtt:
    -  name: OpenWRT clients 5Ghz
       state_topic: collectd/<Open-WRT-Hostname>/iwinfo-wlan0/stations
       unit_of_measurement: clients
-      value_template: "{{ value.split(':')[1].split('\x00')[0] | int }}"
+      value_template: "{{ value.split(':')[1].split('\x00')[0] | int | float(0) }}"
       unique_id: ap_clients5
       device:
         identifiers: WRT7800
@@ -241,7 +241,7 @@ mqtt:
    -  name: OpenWRT temperature
       state_topic: collectd/<Open-WRT-Hostname>/thermal-thermal_zone9/temperature
       unit_of_measurement: °C
-      value_template: "{{ value.split(':')[1].split('\x00')[0] | int }}"
+      value_template: "{{ value.split(':')[1].split('\x00')[0] | int | float(0) }}"
       unique_id: ap_temp
       device:
         identifiers: WRT7800
