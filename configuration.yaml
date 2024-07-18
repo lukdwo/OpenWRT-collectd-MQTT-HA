@@ -118,7 +118,7 @@ mqtt:
    -  name: OpenWRT br-lan packets
       state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_packets
       unit_of_measurement: packets/s
-      value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) }}"
+      value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) | round (0) }}"
       unique_id: br-lan-packets
       device:
         identifiers: WRT7800
