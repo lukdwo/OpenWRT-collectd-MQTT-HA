@@ -78,7 +78,7 @@ mqtt:
    -  name: OpenWRT br-lan errors
       state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_errors
       unit_of_measurement: packets
-      value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) }}"
+      value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) | round (0) }}"
       unique_id: br-lan-errors
       device:
         identifiers: WRT7800
@@ -88,7 +88,7 @@ mqtt:
    -  name: OpenWRT br-lan dropped
       state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_dropped
       unit_of_measurement: packets
-      value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) }}"
+      value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) | round (0) }}"
       unique_id: br-lan-dropped
       device:
         identifiers: WRT7800
@@ -140,7 +140,7 @@ mqtt:
    -  name: OpenWRT wg dropped
       state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_dropped
       unit_of_measurement: packets
-      value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | int | float(0) }}"
+      value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | int | float(0) | round (0) }}"
       unique_id: wg-dropped
       device:
         identifiers: WRT7800
@@ -170,7 +170,7 @@ mqtt:
    -  name: OpenWRT wg packets
       state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_packets
       unit_of_measurement: packets/s
-      value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) }}"
+      value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) | round (0) }}"
       unique_id: wg-packets
       device:
         identifiers: WRT7800
