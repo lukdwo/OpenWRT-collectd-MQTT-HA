@@ -221,6 +221,7 @@ mqtt:
       value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 86400) | round(1) }}"
       unique_id: ap_uptime
       state_class: total_increasing
+      icon: mdi:clock
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
