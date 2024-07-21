@@ -6,6 +6,7 @@ mqtt:
       unit_of_measurement: MB
       value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 1000000) | round(1) }}"
       unique_id: ram_buffered
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -16,6 +17,7 @@ mqtt:
       unit_of_measurement: MB
       value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 1000000) | round(1) }}"
       unique_id: ram_free
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -26,6 +28,7 @@ mqtt:
       unit_of_measurement: MB
       value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 1000000) | round(1) }}"
       unique_id: ram_cached
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -36,6 +39,7 @@ mqtt:
       unit_of_measurement: MB
       value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 1000000) | round(1) }}"
       unique_id: ram_used
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -47,7 +51,8 @@ mqtt:
       unit_of_measurement: load
       state_topic: collectd/<Open-WRT-Hostname>/load/load
       value_template: "{{ (value.split(':')[1] | float(0)) | round(1) }}"
-      unique_id: L1 
+      unique_id: L1
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -57,7 +62,8 @@ mqtt:
       unit_of_measurement: load
       state_topic: collectd/<Open-WRT-Hostname>/load/load
       value_template: "{{ (value.split(':')[2] | float(0)) | round(1) }}"
-      unique_id: L5 
+      unique_id: L5
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -68,6 +74,7 @@ mqtt:
       state_topic: collectd/<Open-WRT-Hostname>/load/load
       value_template: "{{ (value.split(':')[3].split('\x00')[0] | float(0)) | round(1) }}"
       unique_id: L15
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -80,6 +87,7 @@ mqtt:
       unit_of_measurement: packets
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) | round (0) }}"
       unique_id: br-lan-errors
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -90,6 +98,7 @@ mqtt:
       unit_of_measurement: packets
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) | round (0) }}"
       unique_id: br-lan-dropped
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -100,6 +109,7 @@ mqtt:
       unit_of_measurement: MB/s
       value_template: "{{ (value.split(':')[1] | float(0) / 1048576) | round (2) }}"
       unique_id: br-lan-tx-transfer
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -110,6 +120,7 @@ mqtt:
       unit_of_measurement: MB/s
       value_template: "{{ (value.split(':')[2].split('\x00')[0] | float(0) / 1048576) | round (2) }}"
       unique_id: br-lan-rx-transfer
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -120,6 +131,7 @@ mqtt:
       unit_of_measurement: packets/s
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) | round (0) }}"
       unique_id: br-lan-packets
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -132,6 +144,7 @@ mqtt:
       unit_of_measurement: packets
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) }}"
       unique_id: wg-errors
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -142,6 +155,7 @@ mqtt:
       unit_of_measurement: packets
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | int | float(0) | round (0) }}"
       unique_id: wg-dropped
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -152,6 +166,7 @@ mqtt:
       unit_of_measurement: MB/s
       value_template: "{{ value.split(':')[1] | float(0) / 1048576 | round (2) }}"
       unique_id: wg-tx-transfer
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -162,6 +177,7 @@ mqtt:
       unit_of_measurement: MB/s
       value_template: "{{ value.split(':')[2].split('\x00')[0] | float(0) / 1048576 | round (2) }}"
       unique_id: wg-rx-transfer
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -172,6 +188,7 @@ mqtt:
       unit_of_measurement: packets/s
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) | round (0) }}"
       unique_id: wg-packets
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -184,6 +201,7 @@ mqtt:
       unit_of_measurement: days
       value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 86400) | round(1) }}"
       unique_id: ap_uptime
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -195,6 +213,7 @@ mqtt:
       unit_of_measurement: ms
       value_template: "{{ value.split(':')[1].split('\x00')[0] | float(0) | round(2) }}"
       unique_id: ap_ping
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -207,6 +226,7 @@ mqtt:
       unit_of_measurement: connections
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int | float(0) }}"
       unique_id: ap_connections
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -219,6 +239,7 @@ mqtt:
       unit_of_measurement: clients
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int | float(0) }}"
       unique_id: ap_clients2
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -231,6 +252,7 @@ mqtt:
       unit_of_measurement: clients
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int | float(0) }}"
       unique_id: ap_clients5
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -243,6 +265,7 @@ mqtt:
       unit_of_measurement: °C
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int | float(0) }}"
       unique_id: ap_temp
+      state_class: measurement
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
