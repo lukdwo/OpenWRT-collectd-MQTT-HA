@@ -61,6 +61,7 @@ mqtt:
       value_template: "{{ (value.split(':')[1] | float(0)) | round(1) }}"
       unique_id: L1
       state_class: measurement
+      icon: mdi:gauge
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -72,6 +73,7 @@ mqtt:
       value_template: "{{ (value.split(':')[2] | float(0)) | round(1) }}"
       unique_id: L5
       state_class: measurement
+      icon: mdi:gauge
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -83,6 +85,7 @@ mqtt:
       value_template: "{{ (value.split(':')[3].split('\x00')[0] | float(0)) | round(1) }}"
       unique_id: L15
       state_class: measurement
+      icon: mdi:gauge
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
