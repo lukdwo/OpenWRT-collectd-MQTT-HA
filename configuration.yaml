@@ -8,6 +8,7 @@ mqtt:
       unique_id: ram_buffered
       state_class: measurement
       device_class: data_size
+      icon: mdi:memory
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -20,6 +21,7 @@ mqtt:
       unique_id: ram_free
       state_class: measurement
       device_class: data_size
+      icon: mdi:memory
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -32,6 +34,7 @@ mqtt:
       unique_id: ram_cached
       state_class: measurement
       device_class: data_size
+      icon: mdi:memory
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -44,6 +47,7 @@ mqtt:
       unique_id: ram_used
       state_class: measurement
       device_class: data_size
+      icon: mdi:memory
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -248,6 +252,7 @@ mqtt:
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int | float(0) }}"
       unique_id: ap_clients2
       state_class: measurement
+      icon: mdi:wifi
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -261,6 +266,7 @@ mqtt:
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int | float(0) }}"
       unique_id: ap_clients5
       state_class: measurement
+      icon: mdi:wifi
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
