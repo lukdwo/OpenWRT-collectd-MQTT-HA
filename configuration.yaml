@@ -201,7 +201,7 @@ mqtt:
       unit_of_measurement: days
       value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 86400) | round(1) }}"
       unique_id: ap_uptime
-      state_class: measurement
+      state_class: total_increasing
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
