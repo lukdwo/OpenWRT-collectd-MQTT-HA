@@ -21,6 +21,7 @@ Optional `collectd-mod-*` packages can provide more data. These are recommended:
 
     collectd-mod-thermal
     collectd-mod-uptime
+    collectd-mod-dhcpleases
 
 Navigate to *Statistics > Setup*. If you installed optional mod packages, enable them in the *General Plugin* tab.
 
