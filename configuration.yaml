@@ -294,3 +294,17 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
+
+# DHCP clients
+   -  name: OpenWRT DHCP clients
+      state_topic: collectd/<Open-WRT-Hostname>/dhcpleases/count
+      unit_of_measurement: clients
+      value_template: "{{ value.split(':')[1].split('\x00')[0] | int }}"
+      unique_id: dhcp_clients
+      state_class: measurement
+      icon: mdi:router-network
+      device:
+        identifiers: WRT7800
+        name: Router Netgear R7800
+        model: R7800
+        manufacturer: Netgear
