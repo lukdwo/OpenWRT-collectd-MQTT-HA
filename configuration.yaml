@@ -236,7 +236,6 @@ mqtt:
       device_class: timestamp
       value_template: "{{ as_datetime( (value.split(':')[0] | float ) - (value.split(':')[1].split('\x00')[0] | float ) ) }}"
       unique_id: ap_uptime
-      state_class: total_increasing
       icon: mdi:clock
       device:
         identifiers: WRT7800
