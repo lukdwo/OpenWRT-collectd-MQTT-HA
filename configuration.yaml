@@ -312,7 +312,7 @@ mqtt:
         manufacturer: Netgear
 
 # DHCP clients
-   -  name: OpenWRT DHCP clients
+   -  name: OpenWRT DHCP Active Leases
       state_topic: collectd/<Open-WRT-Hostname>/dhcpleases/count
       unit_of_measurement: clients
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int }}"
