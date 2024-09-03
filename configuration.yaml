@@ -259,7 +259,7 @@ mqtt:
    -  name: OpenWRT connections
       state_topic: collectd/<Open-WRT-Hostname>/conntrack/conntrack
       unit_of_measurement: connections
-      value_template: "{{ value.split(':')[1].split('\x00')[0] | int | float(0) }}"
+      value_template: "{{ value.split(':')[1].split('\x00')[0] | int | }}"
       unique_id: ap_connections
       state_class: measurement
       device:
