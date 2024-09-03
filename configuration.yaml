@@ -272,7 +272,7 @@ mqtt:
    -  name: OpenWRT clients 2.4Ghz
       state_topic: collectd/<Open-WRT-Hostname>/iwinfo-wlan1/stations
       unit_of_measurement: clients
-      value_template: "{{ value.split(':')[1].split('\x00')[0] | int | float(0) }}"
+      value_template: "{{ value.split(':')[1].split('\x00')[0] | int | }}"
       unique_id: ap_clients2
       state_class: measurement
       icon: mdi:router-network-wireless
@@ -286,7 +286,7 @@ mqtt:
    -  name: OpenWRT clients 5Ghz
       state_topic: collectd/<Open-WRT-Hostname>/iwinfo-wlan0/stations
       unit_of_measurement: clients
-      value_template: "{{ value.split(':')[1].split('\x00')[0] | int | float(0) }}"
+      value_template: "{{ value.split(':')[1].split('\x00')[0] | int | }}"
       unique_id: ap_clients5
       state_class: measurement
       icon: mdi:router-network-wireless
