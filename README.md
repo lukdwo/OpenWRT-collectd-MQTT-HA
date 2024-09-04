@@ -8,10 +8,6 @@ Let's prepare Home Assistant first.
 
 If you don't have it yet, get Mosquitto Broker up and running. Read ![the official docs](https://github.com/home-assistant/addons/blob/174f8e66d0eaa26f01f528beacbde0bd111b711c/mosquitto/DOCS.md) to get started. Don't forget to configure the MQTT Integration as well!
 
-Navigate to the MQTT Integration, then click *Configure*. In the section Listen to a topic, add `collectd/#`, then click *Start Listening*. 
-Reload the MQTT integration to apply the changes.
-
-
 ### OpenWRT
 
 Install the following packages:
@@ -25,9 +21,29 @@ Optional `collectd-mod-*` packages can provide more data. These are recommended:
 
     collectd-mod-thermal
     collectd-mod-uptime
+    collectd-mod-dhcpleases
 
 Navigate to *Statistics > Setup*. If you installed optional mod packages, enable them in the *General Plugin* tab.
 
+If you're running OpenWRT snapshots from the master branch (24.x and above), the luci-app-statistics [has the ability](https://github.com/openwrt/luci/commit/8bf5646459e229c1d01736f7c45f3b1c9bf3058f) to configure MQTT via GUI. If you're running a previous version up to OpenWRT 23.05, you'll have to follow the CLI steps. The next major release will have this built in.
+<details>
+     <summary>GUI configuration - OpenWRT snapshots</summary>
+    
+In the *Output Plugins* Tab, enable *Mqtt* and click on Configure. Then click Add, and enter the following Details:
+- Name - `OpenWRT` or what you like
+- Host - this is your Home Assistant IP
+- Port - `1883` if you're using the default port
+- User - your MQTT User
+- Password - your MQTT password
+- Prefix - `collectd`
+
+Save and apply changes.  
+
+</details>
+
+
+<details>
+     <summary>CLI configuration - up to OpenWRT 23.05</summary>
 Connect to your OpenWRT router via SSH, create a new folder called `conf.d` in `/etc/collectd/`
 
 Using your favourite editor, create a new file in conf.d called `mqtt.conf`
@@ -53,6 +69,7 @@ LoadPlugin mqtt
 ```
 
 Restart collectd on OpenWRT by executing `service collectd restart`.
+</details>
 
 OpenWRT will start sending data to Home Assistant, but you won't be able to see it (yet).
 
@@ -92,6 +109,8 @@ To use this card, you must install `multiple-entity-row` and `mini-graph-card` f
 Edit the dashboard, add a new YAML card and paste the code you find in [lovelace.yaml](lovelace.yaml).
 
 ## Troubleshooting
+
+To quickly check that you're receiving data from your OpenWRT router, open HA and Navigate to the MQTT Integration, then click *Configure*. In the section Listen to a topic, add `collectd/#`, then click *Start Listening*. You should see many messages coming from OpenWRT.
 
 Check received data on MQTT server using  [MQTT Explorer](https://community.home-assistant.io/t/addon-mqtt-explorer-new-version/603739)  or use this code if you prefer:
 
