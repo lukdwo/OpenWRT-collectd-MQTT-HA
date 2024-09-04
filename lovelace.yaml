@@ -1,7 +1,7 @@
 type: entities
 entities:
   - entity: sensor.openwrt_uptime
-    format: precision2
+    format: relative
     tap_action:
       action: url
       url_path: https://<your router ip>
