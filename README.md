@@ -25,7 +25,7 @@ Optional `collectd-mod-*` packages can provide more data. These are recommended:
 
 Navigate to *Statistics > Setup*. If you installed optional mod packages, enable them in the *General Plugin* tab.
 
-If you're running OpenWRT snapshots from the master branch, the luci-app-statistics [has the ability](https://github.com/openwrt/luci/commit/8bf5646459e229c1d01736f7c45f3b1c9bf3058f) to configure MQTT via GUI. For all others up to OpenWRT 23.05, you'll have to follow the CLI steps. The next major release will have this built in.
+If you're running OpenWRT snapshots from the master branch (24.x and above), the luci-app-statistics [has the ability](https://github.com/openwrt/luci/commit/8bf5646459e229c1d01736f7c45f3b1c9bf3058f) to configure MQTT via GUI. If you're running a previous version up to OpenWRT 23.05, you'll have to follow the CLI steps. The next major release will have this built in.
 <details>
      <summary>GUI configuration - OpenWRT snapshots</summary>
     
