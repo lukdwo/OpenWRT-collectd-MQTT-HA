@@ -15,6 +15,7 @@ Install the following packages:
 
     luci-app-statistics 
     collectd-mod-mqtt
+    mosquitto-client-ssl
 
 The first package will install `collectd` and most of the essential dependencies.
 
