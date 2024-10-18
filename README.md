@@ -9,6 +9,7 @@ Let's prepare Home Assistant first.
 If you don't have it yet, get Mosquitto Broker up and running. Read ![the official docs](https://github.com/home-assistant/addons/blob/174f8e66d0eaa26f01f528beacbde0bd111b711c/mosquitto/DOCS.md) to get started. Don't forget to configure the MQTT Integration as well!
 
 ### OpenWRT
+### Collecd and MQTT Setup
 
 Install the following packages:
 
@@ -25,7 +26,7 @@ Optional `collectd-mod-*` packages can provide more data. These are recommended:
 
 Navigate to *Statistics > Setup*. If you installed optional mod packages, enable them in the *General Plugin* tab.
 
-If you're running OpenWRT snapshots from the master branch (24.x and above), the luci-app-statistics [has the ability](https://github.com/openwrt/luci/commit/8bf5646459e229c1d01736f7c45f3b1c9bf3058f) to configure MQTT via GUI. If you're running a previous version up to OpenWRT 23.05, you'll have to follow the CLI steps. The next major release will have this built in.
+If you're running OpenWRT snapshots from the master branch (24.x and above), the luci-app-statistics [has the ability](https://github.com/openwrt/luci/commit/8bf5646459e229c1d01736f7c45f3b1c9bf3058f) to configure MQTT via GUI. If you're running a version up to OpenWRT 23.05, you'll have to follow the CLI steps. The next major release will have this built in.
 <details>
      <summary>GUI configuration - OpenWRT snapshots</summary>
     
@@ -73,6 +74,21 @@ Restart collectd on OpenWRT by executing `service collectd restart`.
 
 OpenWRT will start sending data to Home Assistant, but you won't be able to see it (yet).
 
+### WAN Status and IP address
+
+For some weird reason, the WAN connectivity status and IP address are not collected by any collectd plugins, so we have to use a hotplug script.  
+- Download the script `01-ha-mqtt-wan-status`
+- Edit the user variables using the data you have already entered for the previous setup
+- Connect the OpenWRT router via SSH and place this script in `/etc/hotplug.d/iface/`
+- Make the script executable `chmod +x 01-ha-mqtt-wan-status`
+
+The script is now ready but won't trigger until a connectivity event.
+To test the script, you can disconnect and reconnect the wan using this command `ifdown wan && ifup wan`.
+
+**Please note**: this script has some hardcoded values. 
+- WAN Status won't work if your wan interface is not called `wan`
+- WAN IP address won't work if the wan device name is not `pppoe-wan`
+
 ### Home Assistant Entities setup
 
 Go back to Home Assistant for the final setup.
@@ -115,8 +131,3 @@ To quickly check that you're receiving data from your OpenWRT router, open HA an
 Check received data on MQTT server using  [MQTT Explorer](https://community.home-assistant.io/t/addon-mqtt-explorer-new-version/603739)  or use this code if you prefer:
 
     mosquitto_sub -h localhost -p 1883 -u user -P Password -t collectd/# -d
-
- 
-
-
-
