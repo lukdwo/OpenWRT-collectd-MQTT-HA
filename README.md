@@ -1,5 +1,5 @@
 
-# OpenWRT Sensors for Home Assistant
+# OpenWRT statistics for Home Assistant
 Collect OpenWRT statistics from your Router using these templates!
 
 OpenWRT does not have a good integration with HA: these sensors try to bring relevant data to Home Assistant. 
