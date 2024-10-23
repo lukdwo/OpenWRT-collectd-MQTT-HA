@@ -1,6 +1,8 @@
 
-# OpenWRT-collectd-MQTT-HA
-Collect OpenWRT statistics from your Router using this MQTT Template.
+# OpenWRT Sensors for Home Assistant
+Collect OpenWRT statistics from your Router using these templates!
+
+OpenWRT does not have a good integration with HA: these sensors try to bring relevant data to Home Assistant. 
 
 ## Setup
 ### Home Assistant MQTT setup
