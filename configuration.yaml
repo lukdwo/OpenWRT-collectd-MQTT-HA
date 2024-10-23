@@ -1,7 +1,7 @@
 ### OpenWRT MQTT
 mqtt:
   sensor:
-   -  name: OpenWRT RAM buffered
+   -  name: RAM buffered
       state_topic: collectd/<Open-WRT-Hostname>/memory/memory-buffered
       unit_of_measurement: MB
       value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 1000000) | round(1) }}"
@@ -14,7 +14,7 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
-   -  name: OpenWRT RAM free
+   -  name: RAM free
       state_topic: collectd/<Open-WRT-Hostname>/memory/memory-free
       unit_of_measurement: MB
       value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 1000000) | round(1) }}"
@@ -27,7 +27,7 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
-   -  name: OpenWRT RAM cached
+   -  name: RAM cached
       state_topic: collectd/<Open-WRT-Hostname>/memory/memory-cached
       unit_of_measurement: MB
       value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 1000000) | round(1) }}"
@@ -40,7 +40,7 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
-   -  name: OpenWRT RAM used
+   -  name: RAM used
       state_topic: collectd/<Open-WRT-Hostname>/memory/memory-used
       unit_of_measurement: MB
       value_template: "{{ (value.split(':')[1].split('\x00')[0] | float(0) / 1000000) | round(1) }}"
@@ -55,7 +55,7 @@ mqtt:
         manufacturer: Netgear
  
 # load
-   -  name: OpenWRT L1
+   -  name: L1
       unit_of_measurement: load
       state_topic: collectd/<Open-WRT-Hostname>/load/load
       value_template: "{{ (value.split(':')[1] | float(0)) | round(1) }}"
@@ -67,7 +67,7 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
-   -  name: OpenWRT L5
+   -  name: L5
       unit_of_measurement: load
       state_topic: collectd/<Open-WRT-Hostname>/load/load
       value_template: "{{ (value.split(':')[2] | float(0)) | round(1) }}"
@@ -79,7 +79,7 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
-   -  name: OpenWRT L15
+   -  name: L15
       unit_of_measurement: load
       state_topic: collectd/<Open-WRT-Hostname>/load/load
       value_template: "{{ (value.split(':')[3].split('\x00')[0] | float(0)) | round(1) }}"
@@ -93,7 +93,7 @@ mqtt:
         manufacturer: Netgear
  
 # br-lan interface
-   -  name: OpenWRT br-lan errors
+   -  name: Br-lan errors
       state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_errors
       unit_of_measurement: packets
       value_template: >-
@@ -113,7 +113,7 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
-   -  name: OpenWRT br-lan dropped
+   -  name: Br-lan dropped
       state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_dropped
       unit_of_measurement: packets
       value_template: >-
@@ -133,7 +133,7 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
-   -  name: OpenWRT br-lan TX MB/s
+   -  name: Br-lan TX MB/s
       state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_octets
       unit_of_measurement: MB/s
       value_template: "{{ (value.split(':')[1] | float(0) / 1048576) | round (2) }}"
@@ -146,7 +146,7 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
-   -  name: OpenWRT br-lan RX MB/s
+   -  name: Br-lan RX MB/s
       state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_octets
       unit_of_measurement: MB/s
       value_template: "{{ (value.split(':')[2].split('\x00')[0] | float(0) / 1048576) | round (2) }}"
@@ -159,7 +159,7 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
-   -  name: OpenWRT br-lan packets
+   -  name: br-lan packets
       state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_packets
       unit_of_measurement: packets/s
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) | round (0) }}"
@@ -173,7 +173,7 @@ mqtt:
         manufacturer: Netgear
  
 # wg interface
-   -  name: OpenWRT wg errors
+   -  name: WG errors
       state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_errors
       unit_of_measurement: packets
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) }}"
@@ -185,7 +185,7 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
-   -  name: OpenWRT wg dropped
+   -  name: WG dropped
       state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_dropped
       unit_of_measurement: packets
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | int | float(0) | round (0) }}"
@@ -197,7 +197,7 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
-   -  name: OpenWRT wg TX MB/s
+   -  name: WG TX MB/s
       state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_octets
       unit_of_measurement: MB/s
       value_template: "{{ value.split(':')[1] | float(0) / 1048576 | round (2) }}"
@@ -210,7 +210,7 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
-   -  name: OpenWRT wg RX MB/s
+   -  name: WG RX MB/s
       state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_octets
       unit_of_measurement: MB/s
       value_template: "{{ value.split(':')[2].split('\x00')[0] | float(0) / 1048576 | round (2) }}"
@@ -223,7 +223,7 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
-   -  name: OpenWRT wg packets
+   -  name: WG packets
       state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_packets
       unit_of_measurement: packets/s
       value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) | round (0) }}"
@@ -237,7 +237,7 @@ mqtt:
         manufacturer: Netgear
 
 # uptime
-   -  name: OpenWRT uptime
+   -  name: Uptime
       state_topic: collectd/<Open-WRT-Hostname>/uptime/uptime
       device_class: timestamp
       value_template: "{{ as_datetime( (value.split(':')[0] | float ) - (value.split(':')[1].split('\x00')[0] | float ) ) }}"
@@ -249,7 +249,7 @@ mqtt:
         model: R7800
         manufacturer: Netgear
 # ping
-   -  name: OpenWRT google ping
+   -  name: Google ping
       state_topic: collectd/<Open-WRT-Hostname>/ping/ping-8.8.8.8
       unit_of_measurement: ms
       value_template: "{{ value.split(':')[1].split('\x00')[0] | float(0) | round(2) }}"
@@ -263,7 +263,7 @@ mqtt:
         manufacturer: Netgear
         
 # connections
-   -  name: OpenWRT connections
+   -  name: Connections
       state_topic: collectd/<Open-WRT-Hostname>/conntrack/conntrack
       unit_of_measurement: connections
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int | }}"
@@ -277,7 +277,7 @@ mqtt:
         manufacturer: Netgear
         
 # 2.4 ghz clients
-   -  name: OpenWRT clients 2.4Ghz
+   -  name: Clients 2.4Ghz
       state_topic: collectd/<Open-WRT-Hostname>/iwinfo-wlan1/stations
       unit_of_measurement: clients
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int | }}"
@@ -291,7 +291,7 @@ mqtt:
         manufacturer: Netgear
         
 # 5 ghz clients
-   -  name: OpenWRT clients 5Ghz
+   -  name: Clients 5Ghz
       state_topic: collectd/<Open-WRT-Hostname>/iwinfo-wlan0/stations
       unit_of_measurement: clients
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int | }}"
@@ -305,7 +305,7 @@ mqtt:
         manufacturer: Netgear
 
 # temperature
-   -  name: OpenWRT temperature
+   -  name: Temperature
       state_topic: collectd/<Open-WRT-Hostname>/thermal-thermal_zone9/temperature
       unit_of_measurement: °C
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int | float(0) }}"
@@ -319,7 +319,7 @@ mqtt:
         manufacturer: Netgear
 
 # DHCP clients
-   -  name: OpenWRT DHCP Active Leases
+   -  name: DHCP Active Leases
       state_topic: collectd/<Open-WRT-Hostname>/dhcpleases/count
       unit_of_measurement: clients
       value_template: "{{ value.split(':')[1].split('\x00')[0] | int }}"
