@@ -333,10 +333,10 @@ mqtt:
         manufacturer: Netgear
 
 # WAN IP Address
-   - name: OpenWRT WAN IP
-    state_topic: collectd/<Open-WRT-Hostname>/wan-ip
-    unique_id: wan_ip
-    icon: mdi:web
+   -  name: WAN IP
+      state_topic: collectd/<Open-WRT-Hostname>/wan-ip
+      unique_id: wan_ip
+      icon: mdi:web
       device:
         identifiers: WRT7800
         name: Router Netgear R7800
@@ -345,7 +345,7 @@ mqtt:
 
 # WAN Status
   binary_sensor:
-    name: OpenWRT WAN Status
+    name: WAN Status
     state_topic: collectd/<Open-WRT-Hostname>/pppoe-wan
     device_class: connectivity
     unique_id: wan_status
