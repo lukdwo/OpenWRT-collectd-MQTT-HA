@@ -1,10 +1,30 @@
 
 # OpenWRT statistics for Home Assistant
-Collect OpenWRT statistics from your Router using these templates!
 
-OpenWRT does not have a good integration with HA: these sensors try to bring relevant data to Home Assistant. 
+Bridge the gap between OpenWRT and Home Assistant: collect statistics from your Router using these template sensors.
 
-## Setup
+These sensors won't replace a proper integration for OpenWRT, which is currently not in a good state. The goal is to get some (basic) information from OpenWRT in Home Assistant so you can monitor it.
+
+This collection of sensors will expose the following information:
+
+- CPU Temperature in °C
+- Connected clients (number of) to 2.4 and 5ghz Access Points
+- DHCP active leases (number of)
+- Network connections (number of)
+- Ping to Google
+- RAM statistics (Buffered, Cached, Free, Used)
+- System Load (L1, L5, L15)
+- Uptime (days, weeks, months)
+- LAN Packets: processed, dropped and errors
+- LAN Received and Transferred MB/s
+- WAN Status: Connected/Disconnected
+- WAN IP address
+- Wireguard Packets: processed, dropped and errors
+- Wireguard Received and Transferred MB/s
+
+Wireguard and LAN are just examples: you can track any interface you'd like.
+
+# Setup
 ### Home Assistant MQTT setup
 Let's prepare Home Assistant first.
 
@@ -26,6 +46,7 @@ Optional `collectd-mod-*` packages can provide more data. These are recommended:
     collectd-mod-thermal
     collectd-mod-uptime
     collectd-mod-dhcpleases
+    collectd-mod-ping
 
 Navigate to *Statistics > Setup*. If you installed optional mod packages, enable them in the *General Plugin* tab.
 
