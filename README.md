@@ -15,11 +15,11 @@ This collection of sensors will expose the following information:
 - RAM statistics (Buffered, Cached, Free, Used)
 - System Load (L1, L5, L15)
 - Uptime (days, weeks, months)
-- LAN Packets: processed, dropped and errors
+- LAN Packets: processed/s, dropped and errors
 - LAN Received and Transferred MB/s
 - WAN Status: Connected/Disconnected
 - WAN IP address
-- Wireguard Packets: processed, dropped and errors
+- Wireguard Packets: processed/s, dropped and errors
 - Wireguard Received and Transferred MB/s
 
 Wireguard and LAN are just examples: you can track any interface you'd like.
