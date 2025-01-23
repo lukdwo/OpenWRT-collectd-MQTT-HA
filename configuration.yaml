@@ -226,7 +226,7 @@ mqtt:
    -  name: WG packets
       state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_packets
       unit_of_measurement: packets/s
-      value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) | round (0) }}"
+      value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int }}"
       unique_id: wg-packets
       state_class: measurement
       icon: mdi:lan-connect
