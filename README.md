@@ -140,7 +140,9 @@ Save the file and restart Home Assistant.
 
 When finished, you will have a new MQTT device named after the name you have chosen above, and the entities will be populated.
 
-Please note that some entities require additional OpenWRT mod packages.
+If some entities don't provide values, here's what it could be happening. 
+- These entities require additional OpenWRT mod packages.
+- The default MQTT topics don't correspond to those published by your router. This is expected since every router is different. Refer to the Troubleshooting section to find the right topics.
 
 ## Dashboard and card setup
 
