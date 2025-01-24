@@ -135,7 +135,7 @@ mqtt:
         manufacturer: Netgear
    -  name: Br-lan TX Mb/s
       state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_octets
-      unit_of_measurement: MB/s
+      unit_of_measurement: Mbit/s
       value_template: "{{ (value.split(':')[1] | float(0) * 8 / 1048576) | round(2) }}"
       unique_id: br-lan-tx-transfer
       state_class: measurement
@@ -146,10 +146,10 @@ mqtt:
         name: Router Netgear R7800
         model: R7800
         manufacturer: Netgear
-   -  name: Br-lan RX MB/s
+   -  name: Br-lan RX Mb/s
       state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_octets
-      unit_of_measurement: MB/s
-      value_template: "{{ (value.split(':')[2].split('\x00')[0] | float(0) / 1048576) | round (2) }}"
+      unit_of_measurement: Mbit/s
+      value_template: "{{ (value.split(':')[2].split('\x00')[0] | float(0) * 8 / 1048576) | round(2) }}"
       unique_id: br-lan-rx-transfer
       state_class: measurement
       device_class: data_rate
