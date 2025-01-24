@@ -92,6 +92,87 @@ sensor:
       model: R7800
       manufacturer: Netgear
       
+# WAN interface (eth1)
+  - name: WAN errors
+    state_topic: collectd/<Open-WRT-Hostname>/interface-eth1/if_errors
+    unit_of_measurement: packets
+    value_template: >-
+      {% set parts = value.split(':') %}
+      {% if parts|length >= 3 %}
+        {% set value1 = parts[1]|float(0) %}
+        {% set value2 = parts[2].split('\x00')[0]|float(0) %}
+        {{ (value1 + value2)|round(0)|int }}
+      {% else %}
+        {{ 0 }}
+      {% endif %}
+    unique_id: wan-errors
+    state_class: measurement
+    icon: mdi:lan-disconnect
+    device:
+      identifiers: MT6000
+      name: GL.iNet Flint2 Router
+      model: MT6000
+      manufacturer: GL.iNet
+
+  - name: WAN dropped
+    state_topic: collectd/<Open-WRT-Hostname>/interface-eth1/if_dropped
+    unit_of_measurement: packets
+    value_template: >-
+      {% set parts = value.split(':') %}
+      {% if parts|length >= 3 %}
+        {% set value1 = parts[1]|float(0) %}
+        {% set value2 = parts[2].split('\x00')[0]|float(0) %}
+        {{ (value1 + value2)|round(0)|int }}
+      {% else %}
+        {{ 0 }}
+      {% endif %}
+    unique_id: br-wan-dropped
+    state_class: measurement
+    icon: mdi:lan-pending
+    device:
+      identifiers: WRT7800
+      name: Router Netgear R7800
+      model: R7800
+      manufacturer: Netgear
+  - name: WAN RX
+    state_topic: collectd/<Open-WRT-Hostname>/interface-eth1/if_octets
+    unit_of_measurement: Mbit/s
+    value_template: "{{ (value.split(':')[1] | float(0) * 8 / 1048576) | round(2) }}"
+    unique_id: br-wan-bits-rx-transfer
+    state_class: measurement
+    device_class: data_rate
+    icon: mdi:upload-network
+    device:
+      identifiers: WRT7800
+      name: Router Netgear R7800
+      model: R7800
+      manufacturer: Netgear
+  - name: WAN TX
+    state_topic: collectd/<Open-WRT-Hostname>/interface-eth1/if_octets
+    unit_of_measurement: Mbit/s
+    value_template: "{{ (value.split(':')[2].split('\x00')[0] | float(0) * 8 / 1048576) | round(2) }}"
+    unique_id: br-wan-bits-tx-transfer
+    state_class: measurement
+    device_class: data_rate
+    icon: mdi:download-network
+    device:
+      identifiers: WRT7800
+      name: Router Netgear R7800
+      model: R7800
+      manufacturer: Netgear
+  - name: WAN packets
+    state_topic: collectd/<Open-WRT-Hostname>/interface-eth1/if_packets
+    unit_of_measurement: packets/s
+    value_template: "{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) | round (0) }}"
+    unique_id: br-wan-packets
+    state_class: measurement
+    icon: mdi:lan-connect
+    device:
+      identifiers: WRT7800
+      name: Router Netgear R7800
+      model: R7800
+      manufacturer: Netgear   
+      
 # LAN Interface (br-lan)
   - name: Br-lan errors
     state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_errors
