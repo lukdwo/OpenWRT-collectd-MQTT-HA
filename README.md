@@ -116,9 +116,9 @@ To test the script, you can disconnect and reconnect the wan using this command 
 ### Home Assistant Entities setup
 
 Go back to Home Assistant for the final setup.
-Some text replacements are required, on Windows you can use Notepad++.
+Some text operations are required, on Windows you can use Notepad++.
 
-Open this sample [configuration.yaml](configuration.yaml).
+Download the sample [openwrt.yaml configuration file](openwrt.yaml).
 
 Replace occurrencies of `<Open-WRT-Hostname>` with the value you see in *OpenWRT > System > System > General Settings > Hostname*
 
@@ -132,17 +132,20 @@ Each sensor has a section like the following:
             manufacturer: Netgear
 ```
 
-It allows to create a MQTT device, so all entities are grouped nicely. Replace these example values for **each sensor** entering what you like, these are just informational labels. Use the same values for each entity!
+This sections allows to create a MQTT device to nicely group all entities. Replace these example values for **each sensor**. Enter the router information or what you like, these are just informational labels. Use the same values for each entity!
 
-When you are done with text editing, paste the code in your configuration.yaml on Home Assistant.
+When you are done with text editing, save the file and move it to your Home Assistant `config` folder.
 
-Save the file and restart Home Assistant.
+Open your main Home Assistant configuration.yaml file and add the following code:
+```yaml
+# OpenWRT statistics for Home Assistant
+mqtt: !include openwrt.yaml
+```
+Save the changes, then restart Home Assistant.
 
-When finished, you will have a new MQTT device named after the name you have chosen above, and the entities will be populated.
-
-If some entities don't provide values, here's what it could be happening. 
+You will now have a new MQTT device named after the name you have chosen above, and the entities will be populated. If this is not happening:
 - These entities require additional OpenWRT mod packages.
-- The default MQTT topics don't correspond to those published by your router. This is expected since every router is different. Refer to the Troubleshooting section to find the right topics.
+- The MQTT topics don't correspond to those published by your router. This is expected since every router is different. Refer to the Troubleshooting section to find the right topics.
 
 ## Dashboard and card setup
 
