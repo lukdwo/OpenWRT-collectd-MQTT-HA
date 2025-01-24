@@ -1,0 +1,14 @@
+#!/bin/sh
+MQTT_BOKER_IP="192.168.1.101" #your Home Assistant (MQTT Broker) address
+MQTT_TOPIC1="collectd/<Open-WRT-Hostname>/pppoe-wan"
+MQTT_TOPIC2="collectd/<Open-WRT-Hostname>/wan-ip"
+MQTT_USERNAME="your_mqtt_username"
+MQTT_PASSWORD="your_mqtt_password"
+
+[ "$INTERFACE" = "wan" ] || exit 0
+[ "$ACTION" = "ifdown" ] && mosquitto_pub -h "$MQTT_BOKER_IP" -u "$MQTT_USERNAME" -P "$MQTT_PASSWORD" -t "$MQTT_TOPIC1" -r -m OFF
+[ "$ACTION" = "ifup" ] && mosquitto_pub -h "$MQTT_BOKER_IP" -u "$MQTT_USERNAME" -P "$MQTT_PASSWORD" -t "$MQTT_TOPIC1" -r -m ON
+[ "$ACTION" = "ifupdate" ] && (
+	wanip=$(ifconfig pppoe-wan | awk '/inet addr/{print substr($2,6)}')
+	mosquitto_pub -h "$MQTT_BOKER_IP" -u "$MQTT_USERNAME" -P "$MQTT_PASSWORD" -t "$MQTT_TOPIC2" -r -m "$wanip"
+)
