@@ -1,19 +1,42 @@
 
-# OpenWRT-collectd-MQTT-HA
-Collect OpenWRT statistics from your Router using this MQTT Template.
+# OpenWRT statistics for Home Assistant
 
-## Setup
+Bridge the gap between OpenWRT and Home Assistant: collect statistics from your Router using these template sensors.
+
+These sensors won't replace a proper integration for OpenWRT, which is currently not in a good state. The goal is to get some (basic) information from OpenWRT in Home Assistant so you can monitor it.
+
+This collection of sensors will expose the following information:
+
+- CPU Temperature in °C
+- Connected clients (number of) to 2.4 and 5ghz Access Points
+- DHCP active leases (number of)
+- Network connections (number of)
+- Ping to Google
+- RAM statistics (Buffered, Cached, Free, Used)
+- System Load (L1, L5, L15)
+- Uptime
+- WAN Status: Connected/Disconnected
+- WAN IP address
+- For each of the following interfaces: LAN, WAN, Wireguard
+  - Packets: processed/s, dropped and errors
+  - Received and Transferred MB/s
+
+Interfaces are just examples: you can track any interface you'd like.
+
+# Setup
 ### Home Assistant MQTT setup
 Let's prepare Home Assistant first.
 
 If you don't have it yet, get Mosquitto Broker up and running. Read ![the official docs](https://github.com/home-assistant/addons/blob/174f8e66d0eaa26f01f528beacbde0bd111b711c/mosquitto/DOCS.md) to get started. Don't forget to configure the MQTT Integration as well!
 
 ### OpenWRT
+### Collecd and MQTT Setup
 
 Install the following packages:
 
     luci-app-statistics 
     collectd-mod-mqtt
+    mosquitto-client-ssl
 
 The first package will install `collectd` and most of the essential dependencies.
 
@@ -22,10 +45,11 @@ Optional `collectd-mod-*` packages can provide more data. These are recommended:
     collectd-mod-thermal
     collectd-mod-uptime
     collectd-mod-dhcpleases
+    collectd-mod-ping
 
 Navigate to *Statistics > Setup*. If you installed optional mod packages, enable them in the *General Plugin* tab.
 
-If you're running OpenWRT snapshots from the master branch (24.x and above), the luci-app-statistics [has the ability](https://github.com/openwrt/luci/commit/8bf5646459e229c1d01736f7c45f3b1c9bf3058f) to configure MQTT via GUI. If you're running a previous version up to OpenWRT 23.05, you'll have to follow the CLI steps. The next major release will have this built in.
+If you're running OpenWRT snapshots from the master branch (24.x and above), the luci-app-statistics [has the ability](https://github.com/openwrt/luci/commit/8bf5646459e229c1d01736f7c45f3b1c9bf3058f) to configure MQTT via GUI. If you're running a version up to OpenWRT 23.05, you'll have to follow the CLI steps. The next major release will have this built in.
 <details>
      <summary>GUI configuration - OpenWRT snapshots</summary>
     
@@ -73,12 +97,27 @@ Restart collectd on OpenWRT by executing `service collectd restart`.
 
 OpenWRT will start sending data to Home Assistant, but you won't be able to see it (yet).
 
+### WAN Status and IP address
+
+For some weird reason, the WAN connectivity status and IP address are not collected by any collectd plugins, so we have to use a hotplug script.  
+- Download the script `01-ha-mqtt-wan-status`
+- Edit the user variables using the data you have already entered for the previous setup
+- Connect the OpenWRT router via SSH and place this script in `/etc/hotplug.d/iface/`
+- Make the script executable `chmod +x 01-ha-mqtt-wan-status`
+
+The script is now ready but won't trigger until a connectivity event.
+To test the script, you can disconnect and reconnect the wan using this command `ifdown wan && ifup wan`.
+
+**Please note**: this script has some hardcoded values. 
+- WAN Status won't work if your wan interface is not called `wan`
+- WAN IP address won't work if the wan device name is not `pppoe-wan`
+
 ### Home Assistant Entities setup
 
 Go back to Home Assistant for the final setup.
-Some text replacements are required, on Windows you can use Notepad++.
+Some text operations are required, on Windows you can use Notepad++.
 
-Open this sample [configuration.yaml](configuration.yaml).
+Download the sample [openwrt.yaml configuration file](openwrt.yaml).
 
 Replace occurrencies of `<Open-WRT-Hostname>` with the value you see in *OpenWRT > System > System > General Settings > Hostname*
 
@@ -92,15 +131,20 @@ Each sensor has a section like the following:
             manufacturer: Netgear
 ```
 
-It allows to create a MQTT device, so all entities are grouped nicely. Replace these example values for **each sensor** entering what you like, these are just informational labels. Use the same values for each entity!
+This sections allows to create a MQTT device to nicely group all entities. Replace these example values for **each sensor**. Enter the router information or what you like, these are just informational labels. Use the same values for each entity!
 
-When you are done with text editing, paste the code in your configuration.yaml on Home Assistant.
+When you are done with text editing, save the file and move it to your Home Assistant `config` folder.
 
-Save the file and restart Home Assistant.
+Open your main Home Assistant configuration.yaml file and add the following code:
+```yaml
+# OpenWRT statistics for Home Assistant
+mqtt: !include openwrt.yaml
+```
+Save the changes, then restart Home Assistant.
 
-When finished, you will have a new MQTT device named after the name you have chosen above, and the entities will be populated.
-
-Please note that some entities require additional OpenWRT mod packages.
+You will now have a new MQTT device named after the name you have chosen above, and the entities will be populated. If this is not happening:
+- These entities require additional OpenWRT mod packages.
+- The MQTT topics don't correspond to those published by your router. This is expected since every router is different. Refer to the Troubleshooting section to find the right topics.
 
 ## Dashboard and card setup
 
@@ -115,8 +159,3 @@ To quickly check that you're receiving data from your OpenWRT router, open HA an
 Check received data on MQTT server using  [MQTT Explorer](https://community.home-assistant.io/t/addon-mqtt-explorer-new-version/603739)  or use this code if you prefer:
 
     mosquitto_sub -h localhost -p 1883 -u user -P Password -t collectd/# -d
-
- 
-
-
-
