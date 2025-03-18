@@ -58,7 +58,7 @@ sensor:
   - name: L1
     unit_of_measurement: load
     state_topic: collectd/<Open-WRT-Hostname>/load/load
-    value_template: '{{ (value.split('':'')[1] | float(0)) | round(1) }}'
+    value_template: "{{ (value.split(':')[1] | float(0)) | round(1) }}
     unique_id: L1
     state_class: measurement
     icon: 'mdi:gauge'
@@ -70,7 +70,7 @@ sensor:
   - name: L5
     unit_of_measurement: load
     state_topic: collectd/<Open-WRT-Hostname>/load/load
-    value_template: '{{ (value.split('':'')[2] | float(0)) | round(1) }}'
+    value_template: "{{ (value.split(':')[2] | float(0)) | round(1) }}"
     unique_id: L5
     state_class: measurement
     icon: 'mdi:gauge'
@@ -215,7 +215,7 @@ sensor:
   - name: Br-lan TX Mb/s
     state_topic: collectd/<Open-WRT-Hostname>/interface-br-lan/if_octets
     unit_of_measurement: Mbit/s
-    value_template: "{{ (value.split('':'')[1] | float(0) * 8 / 1048576) | round(2) }}"
+    value_template: "{{ (value.split(':')[1] | float(0) * 8 / 1048576) | round(2) }}"
     unique_id: br-lan-tx-transfer
     state_class: measurement
     device_class: data_rate
@@ -279,7 +279,7 @@ sensor:
   - name: WG TX Mb/s
     state_topic: collectd/<Open-WRT-Hostname>/interface-wg/if_octets
     unit_of_measurement: Mbit/s
-    value_template: "{{ (value.split('':'')[1] | float(0) * 8 / 1048576) | round(2) }}"
+    value_template: "{{ (value.split(':')[1] | float(0) * 8 / 1048576) | round(2) }}"
     unique_id: wg-tx-transfer
     state_class: measurement
     device_class: data_rate
@@ -346,7 +346,7 @@ sensor:
   - name: Connections
     state_topic: collectd/<Open-WRT-Hostname>/conntrack/conntrack
     unit_of_measurement: connections
-    value_template: "{{ value.split(':')[1].split('\0')[0] | int | }}"
+    value_template: "{{ value.split(':')[1].split('\0')[0] | int }}"
     unique_id: ap_connections
     state_class: measurement
     icon: 'mdi:connection'
@@ -360,7 +360,7 @@ sensor:
   - name: Clients 2.4Ghz
     state_topic: collectd/<Open-WRT-Hostname>/iwinfo-wlan1/stations
     unit_of_measurement: clients
-    value_template: "{{ value.split(':')[1].split('\0')[0] | int | }}"
+    value_template: "{{ value.split(':')[1].split('\0')[0] | int }}"
     unique_id: ap_clients2
     state_class: measurement
     icon: 'mdi:router-network-wireless'
@@ -374,7 +374,7 @@ sensor:
   - name: Clients 5Ghz
     state_topic: collectd/<Open-WRT-Hostname>/iwinfo-wlan0/stations
     unit_of_measurement: clients
-    value_template: "{{ value.split(':')[1].split('\0')[0] | int | }}"
+    value_template: "{{ value.split(':')[1].split('\0')[0] | int }}"
     unique_id: ap_clients5
     state_class: measurement
     icon: 'mdi:router-network-wireless'
