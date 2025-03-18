@@ -58,7 +58,7 @@ sensor:
   - name: L1
     unit_of_measurement: load
     state_topic: collectd/<Open-WRT-Hostname>/load/load
-    value_template: "{{ (value.split(':')[1] | float(0)) | round(1) }}
+    value_template: "{{ (value.split(':')[1] | float(0)) | round(1) }}"
     unique_id: L1
     state_class: measurement
     icon: 'mdi:gauge'
