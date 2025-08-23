@@ -1,14 +1,40 @@
 #!/bin/sh
-MQTT_BOKER_IP="192.168.1.101" #your Home Assistant (MQTT Broker) address
-MQTT_TOPIC1="collectd/<Open-WRT-Hostname>/pppoe-wan"
-MQTT_TOPIC2="collectd/<Open-WRT-Hostname>/wan-ip"
-MQTT_USERNAME="your_mqtt_username"
-MQTT_PASSWORD="your_mqtt_password"
 
-[ "$INTERFACE" = "wan" ] || exit 0
-[ "$ACTION" = "ifdown" ] && mosquitto_pub -h "$MQTT_BOKER_IP" -u "$MQTT_USERNAME" -P "$MQTT_PASSWORD" -t "$MQTT_TOPIC1" -r -m OFF
-[ "$ACTION" = "ifup" ] && mosquitto_pub -h "$MQTT_BOKER_IP" -u "$MQTT_USERNAME" -P "$MQTT_PASSWORD" -t "$MQTT_TOPIC1" -r -m ON
+# Query UCI for the settings
+WAN_NAME="wan" # This should be the only thing to configure
+MQTT_BOKER_HOST=`uci get luci_statistics.@collectd_mqtt_block[0].Host` #your Home Assistant (MQTT Broker) address
+HOSTNAME=`uci get system.@system[0].hostname`
+WAN_STATUS_TOPIC="collectd/$HOSTNAME/wan-info/$WAN_NAME-status"
+WAN_IP4_TOPIC="collectd/$HOSTNAME/wan-info/$WAN_NAME-ip"
+WAN_IP6_LINK_LOCAL_TOPIC="collectd/$HOSTNAME/wan-info/$WAN_NAME-ip6-link"
+WAN_IP6_GLOBAL_TOPIC="collectd/$HOSTNAME/wan-info/$WAN_NAME-ip6-global"
+MQTT_USERNAME=`uci get luci_statistics.@collectd_mqtt_block[0].User`
+MQTT_PASSWORD=`uci get luci_statistics.@collectd_mqtt_block[0].Password`
+MQTT_TLS_PROTOCOL=`uci get luci_statistics.@collectd_mqtt_block[0].TLSProtocol`
+MQTT_CA_CERT=`uci get luci_statistics.@collectd_mqtt_block[0].CACert`
+
+#Store auth args for reuse and conditionally include TLS settings
+auth_args="-h $MQTT_BOKER_HOST -u $MQTT_USERNAME -P $MQTT_PASSWORD"
+[ "$MQTT_TLS_PROTOCOL" != "" ] && auth_args=$auth_args" --tls-version $MQTT_TLS_PROTOCOL"
+[ "$MQTT_CA_CERT" != "" ] && auth_args=$auth_args" --cafile $MQTT_CA_CERT"
+
+[ "$ACTION" = "ifdown" ] && mosquitto_pub $auth_args -t "$WAN_STATUS_TOPIC" -r -m OFF
+[ "$ACTION" = "ifup" ] && mosquitto_pub $auth_args -t "$WAN_STATUS_TOPIC" -r -m ON
 [ "$ACTION" = "ifupdate" ] && (
-	wanip=$(ifconfig pppoe-wan | awk '/inet addr/{print substr($2,6)}')
-	mosquitto_pub -h "$MQTT_BOKER_IP" -u "$MQTT_USERNAME" -P "$MQTT_PASSWORD" -t "$MQTT_TOPIC2" -r -m "$wanip"
+	
+	# Get IPV4 address
+	wanip=$(ifconfig $WAN_NAME | awk '/inet addr/{print substr($2,6)}')
+	mosquitto_pub $auth_args -t "$WAN_IP4_TOPIC" -r -m "$wanip"
+	
+	# Get Local IPv6 addresses
+	wanip=$(ifconfig $WAN_NAME | grep Scope:Link | awk '/inet6 / { print $3 }')
+	mosquitto_pub $auth_args -t "$WAN_IP6_LINK_LOCAL_TOPIC" -r -m "$wanip"
+	
+	# Get Global IPv6 addresses
+	wanip=$(ifconfig $WAN_NAME | grep Scope:Global | awk '/inet6 / { print $3 }')
+	ip_count=0
+	for token in $wanip; do
+		mosquitto_pub $auth_args -t "$WAN_IP6_GLOBAL_TOPIC-$ip_count" -r -m "$token"
+		ip_count=${ip_count+1}
+	done		
 )
