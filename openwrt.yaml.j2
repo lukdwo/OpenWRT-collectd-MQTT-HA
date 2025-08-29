@@ -23,7 +23,7 @@ sensor:
     unique_id: {{ item.unique_id }}
     state_topic: {{ item.topic }}
     unit_of_measurement: load
-    value_template: "{% raw %}{{ (value.split(':')[1] | float(0)) | round(1) }}{% endraw %}"
+    value_template: "{% raw %}{{ (value.split(':')[{% endraw %}{{ item.index }}{% raw %}] | float(0)) | round(1) }}{% endraw %}"
     state_class: measurement
     icon: 'mdi:gauge'
     device:

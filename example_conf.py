@@ -55,13 +55,13 @@ config = {
     ],
     "load_sensors": [
         IndexedSensor(
-            name="L1", unique_id="l1", topic=f"{TOPIC_ROOT}/load/load", index=0
+            name="L1", unique_id="l1", topic=f"{TOPIC_ROOT}/load/load", index=1
         ),
         IndexedSensor(
-            name="L5", unique_id="l5", topic=f"{TOPIC_ROOT}/load/load", index=1
+            name="L5", unique_id="l5", topic=f"{TOPIC_ROOT}/load/load", index=2
         ),
         IndexedSensor(
-            name="L15", unique_id="l15", topic=f"{TOPIC_ROOT}/load/load", index=2
+            name="L15", unique_id="l15", topic=f"{TOPIC_ROOT}/load/load", index=3
         ),
     ],
     "interfaces": [
