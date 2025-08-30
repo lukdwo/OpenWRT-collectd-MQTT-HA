@@ -101,7 +101,7 @@ OpenWRT will start sending data to Home Assistant, but you won't be able to see 
 
 For some weird reason, the WAN connectivity status and IP address are not collected by any collectd plugins, so we have to use a hotplug script.  
 - Download the script `01-ha-mqtt-wan-status`
-- Edit the user variables using the data you have already entered for the previous setup
+- If you used the GUI to configure MQTT you will only need to set which interface you want to monitor IE `wan` the rest should be pulled from the settings automatically. You can also manually set these values manually if you configured outside of Luci/UCI.
 - Connect the OpenWRT router via SSH and place this script in `/etc/hotplug.d/iface/`
 - Make the script executable `chmod +x 01-ha-mqtt-wan-status`
 
@@ -109,14 +109,29 @@ The script is now ready but won't trigger until a connectivity event.
 To test the script, you can disconnect and reconnect the wan using this command `ifdown wan && ifup wan`.
 
 **Please note**: this script has some hardcoded values. 
-- WAN Status won't work if your wan interface is not called `wan`
-- WAN IP address won't work if the wan device name is not `pppoe-wan`
+- WAN Status and IP address won't work if your wan interface is not called `wan`
 
 ### Home Assistant Entities setup
 
 Go back to Home Assistant for the final setup.
 Some text operations are required, on Windows you can use Notepad++.
 
+There are two options for generating the openwrt.yaml file either [manually](#manual-find-and-replace) editing the openwrt.yaml, or using the [jinja2 templates](#using-jinja2-templates), and a python config.py. Both will acheive the same result if done properly use whichever you're most comfortable with. The jinja2 templates are most usefull when you would otherwise have a very large .yaml that become difficult to manage due to montioring many interfaces or wifi networks(Main, Guest, IoT etc.)
+
+Once you have the final .yaml file save the file and move it to your Home Assistant `config` folder.
+
+Open your main Home Assistant configuration.yaml file and add the following code:
+```yaml
+# OpenWRT statistics for Home Assistant
+mqtt: !include openwrt.yaml
+```
+Save the changes, then restart Home Assistant.
+
+You will now have a new MQTT device named after the name you have chosen above, and the entities will be populated. If this is not happening:
+- These entities require additional OpenWRT mod packages.
+- The MQTT topics don't correspond to those published by your router. This is expected since every router is different. Refer to the Troubleshooting section to find the right topics.
+
+#### Manual find and replace
 Download the sample [openwrt.yaml configuration file](openwrt.yaml).
 
 Replace occurrencies of `<Open-WRT-Hostname>` with the value you see in *OpenWRT > System > System > General Settings > Hostname*
@@ -133,24 +148,20 @@ Each sensor has a section like the following:
 
 This sections allows to create a MQTT device to nicely group all entities. Replace these example values for **each sensor**. Enter the router information or what you like, these are just informational labels. Use the same values for each entity!
 
-When you are done with text editing, save the file and move it to your Home Assistant `config` folder.
+#### Using Jinja2 Templates
+For this method you will need to have a python3 environment with jinja2 installed. 
 
-Open your main Home Assistant configuration.yaml file and add the following code:
-```yaml
-# OpenWRT statistics for Home Assistant
-mqtt: !include openwrt.yaml
-```
-Save the changes, then restart Home Assistant.
-
-You will now have a new MQTT device named after the name you have chosen above, and the entities will be populated. If this is not happening:
-- These entities require additional OpenWRT mod packages.
-- The MQTT topics don't correspond to those published by your router. This is expected since every router is different. Refer to the Troubleshooting section to find the right topics.
+- Clone this repository
+- Make a copy of `example_conf.py` and name it something useful, `my_conf.py` or maybe your router name(main_e8450.py for example).
+- Edit the `config.py` file to match your OpenWRT setup this will mostly consist of setting the device fields, and adding/removing interfaces or wifi networks you want to monitor.
+- If you don't want to include something simply delete it from the `config.py` and it will be ommitted when the yaml is generated.
+- Once you've finished editing the conf.py save it and then run `python3 gen_conf.py conf.py` this will generate two files [config_name]-openwrt.yaml and [config_name]-lovelace.yaml these are what you'll upload to home assistant
 
 ## Dashboard and card setup
 
 To use this card, you must install `multiple-entity-row` and `mini-graph-card` from HACS.
 
-Edit the dashboard, add a new YAML card and paste the code you find in [lovelace.yaml](lovelace.yaml).
+Edit the dashboard, add a new YAML card and paste the code you find in [lovelace.yaml](lovelace.yaml), or if you used the jinja2 templates [config_name]-lovelace.yaml
 
 ## Troubleshooting
 

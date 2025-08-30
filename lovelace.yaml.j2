@@ -1,0 +1,50 @@
+type: entities
+entities:
+  - entity: sensor.{{ device_prefix }}_{{ uptime.unique_id }}
+    format: relative
+    tap_action:
+      action: url
+      url_path: https://{{ router_host }}
+    type: custom:multiple-entity-row
+    name: {{ device.name }} Stats
+    icon: mdi:access-point-network
+    secondary_info: last-changed
+    entities:
+      {% if dhcp_leases %}
+      - entity: sensor.{{ device_prefix }}_{{ dhcp_leases.unique_id }}
+        unit: false
+        name: DHCP Clients
+      {% endif %}
+      {% for item in load_sensors %}
+      - entity: sensor.{{ device_prefix }}_{{ item.unique_id }}
+        format: precision2
+        unit: false
+        name: {{ item.name }}
+      {% endfor %}
+  - type: custom:mini-graph-card
+    name: {{ device.name }}
+    icon: mdi:server
+    hours_to_show: 12
+    points_per_hour: 6
+    line_width: 2
+    entities:
+      {% if connections %} 
+      - entity: sensor.{{ device_prefix }}_{{ connections.unique_id }}
+        name: Con.
+        color: lightgreen
+      {% endif %}
+      {% for item in temp_sensors %}
+      - entity: sensor.{{ device_prefix }}_{{ item.unique_id }}
+        name: {{ item.name }}
+      {% endfor %}
+      {% if ram_sensors %}
+      - entity: sensor.{{ device_prefix }}_ram_used
+        format: precision2
+        name: RAM/U
+      - entity: sensor.{{ device_prefix }}_ram_free
+        format: precision2
+        name: RAM/F
+      {% endif %}
+      - entity: sensor.{{ device_prefix }}_wg_packets
+        format: precision0
+        name: WG

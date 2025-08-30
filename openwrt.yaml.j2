@@ -1,0 +1,242 @@
+### OpenWRT MQTT Sensors
+sensor:
+# RAM
+{%- for item in ram_sensors %}
+  - name: {{ item.name }}
+    unique_id: {{ item.unique_id }}
+    state_topic: {{ item.topic }}
+    unit_of_measurement: MB
+    value_template: "{% raw %}{{ (value.split(':')[1].split('\0')[0] | float(0) / 1000000) | round(1) }}{% endraw %}"
+    state_class: measurement
+    device_class: data_size
+    icon: 'mdi:memory'
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+{% endfor %}
+ 
+# System Load
+{%- for item in load_sensors %}
+  - name: {{ item.name }}
+    unique_id: {{ item.unique_id }}
+    state_topic: {{ item.topic }}
+    unit_of_measurement: load
+    value_template: "{% raw %}{{ (value.split(':')[{% endraw %}{{ item.index }}{% raw %}] | float(0)) | round(1) }}{% endraw %}"
+    state_class: measurement
+    icon: 'mdi:gauge'
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+{% endfor %}
+
+{% for item in interfaces -%}
+# Iface {{item.name}}
+  - name: {{ item.name }} errors
+    state_topic: {{ item.topic }}/if_errors
+    unit_of_measurement: packets
+    value_template: >-
+      {% raw %}{% set parts = value.split(':') %}
+      {% if parts|length >= 3 %}
+        {% set value1 = parts[1]|float(0) %}
+        {% set value2 = parts[2].split('\x00')[0]|float(0) %}
+        {{ (value1 + value2)|round(0)|int }}
+      {% else %}
+        {{ 0 }}
+      {% endif %}{% endraw %}
+    unique_id: {{ item.unique_id }}-errors
+    state_class: measurement
+    icon: mdi:lan-disconnect
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+
+  - name: {{ item.name }} dropped
+    state_topic: {{ item.topic }}/if_dropped
+    unit_of_measurement: packets
+    value_template: >-
+      {% raw %}{% set parts = value.split(':') %}
+      {% if parts|length >= 3 %}
+        {% set value1 = parts[1]|float(0) %}
+        {% set value2 = parts[2].split('\x00')[0]|float(0) %}
+        {{ (value1 + value2)|round(0)|int }}
+      {% else %}
+        {{ 0 }}
+      {% endif %}{% endraw %}
+    unique_id: {{ item.unique_id }}-dropped
+    state_class: measurement
+    icon: mdi:lan-pending
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+  - name: {{ item.name }} RX
+    state_topic: {{ item.topic }}/if_octets
+    unit_of_measurement: Mbit/s
+    value_template: "{% raw %}{{ (value.split(':')[1] | float(0) * 8 / 1048576) | round(2) }}{% endraw %}"
+    unique_id: {{ item.unique_id }}-bits-rx-transfer
+    state_class: measurement
+    device_class: data_rate
+    icon: mdi:upload-network
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+  - name: {{ item.name }} TX
+    state_topic: {{ item.topic }}/if_octets
+    unit_of_measurement: Mbit/s
+    value_template: "{% raw %}{{ (value.split(':')[2].split('\x00')[0] | float(0) * 8 / 1048576) | round(2) }}{% endraw %}"
+    unique_id: {{ item.unique_id }}-bits-tx-transfer
+    state_class: measurement
+    device_class: data_rate
+    icon: mdi:download-network
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+  - name: {{ item.name }}  packets
+    state_topic: {{ item.topic }}/if_packets
+    unit_of_measurement: packets/s
+    value_template: "{% raw %}{{ value.split(':')[1] | int + value.split(':')[2].split('\x00')[0] | int | float(0) | round (0) }}{% endraw %}"
+    unique_id: {{ item.unique_id }}-packets
+    state_class: measurement
+    icon: mdi:lan-connect
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+{% endfor %}
+
+{% if uptime -%}
+# Uptime
+  - name: {{ uptime.name }}
+    unique_id: {{ uptime.unique_id }}
+    state_topic: {{ uptime.topic }}
+    device_class: timestamp
+    value_template: "{% raw %}{{ as_datetime( (value.split(':')[0] | float ) - (value.split(':')[1].split('\0')[0] | float ) ) }}{% endraw %}"
+    icon: 'mdi:clock'
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+{% endif %}
+
+{% if ping -%}
+# Ping
+  - name: {{ ping.name }}
+    unique_id: {{ ping.unique_id }}
+    state_topic: {{ ping.topic }}
+    unit_of_measurement: ms
+    value_template: "{% raw %}{{ value.split(':')[1].split('\0')[0] | float(0) | round(2) }}{% endraw %}"
+    state_class: measurement
+    icon: 'mdi:clipboard-flow'
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+{% endif %}
+      
+{% if connections -%}
+# Connections
+  - name: {{ connections.name }}
+    unique_id: {{ connections.unique_id }}
+    state_topic: {{ connections.topic }}
+    unit_of_measurement: connections
+    value_template: "{% raw %}{{ value.split(':')[1].split('\0')[0] | int }}{% endraw %}"
+    state_class: measurement
+    icon: 'mdi:connection'
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+{% endif %}
+
+
+{% if dhcp_leases -%}
+# DHCP Active Leases
+  - name: {{ dhcp_leases.name }}
+    unique_id: {{ dhcp_leases.unique_id }}
+    state_topic: {{ dhcp_leases.topic }}
+    unit_of_measurement: clients
+    value_template: "{% raw %}{{ value.split(':')[1].split('\0')[0] | int }}{% endraw %}"
+    state_class: measurement
+    icon: 'mdi:router-network'
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+{% endif %}
+
+
+# Wifi Clients
+{%- for item in wifis %}
+  - name: {{ item.name }}
+    unique_id: {{ item.unique_id }}
+    state_topic: {{ item.topic }}
+    unit_of_measurement: clients
+    value_template: "{% raw %}{{ value.split(':')[1].split('\0')[0] | int }}{% endraw %}"
+    state_class: measurement
+    icon: 'mdi:router-network-wireless'
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+{% endfor %}
+
+# Temperature
+{%- for item in temp_sensors %}
+  - name: {{ item.name }}
+    unique_id: {{ item.unique_id }}
+    state_topic: {{ item.topic }}
+    unit_of_measurement: °C
+    value_template: "{% raw %}{{ value.split(':')[1].split('\0')[0] | int | float(0) }}{% endraw %}"
+    state_class: measurement
+    device_class: temperature
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+{% endfor %}
+
+# WAN IP Address  
+{%- for item in ip_addr_sensors %}
+  - name: {{ item.name }}
+    unique_id: {{ item.unique_id }}
+    state_topic: {{ item.topic }}
+    icon: 'mdi:web'
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+{% endfor %}
+
+# Link Status
+binary_sensor:
+{%- for item in link_status_sensor %}
+  - name: {{ item.name }}
+    unique_id: {{ item.unique_id }}
+    state_topic: {{ item.topic }}
+    device_class: connectivity
+    device:
+      identifiers: {{ device.identifiers }}
+      name: {{ device.name }}
+      model: {{ device.model }}
+      manufacturer: {{ device.manufacturer }}
+{% endfor %}
+
